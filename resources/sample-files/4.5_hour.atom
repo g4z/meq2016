@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:georss="http://www.georss.org/georss">
+<title>USGS Magnitude 4.5+ Earthquakes, Past Hour</title>
+<updated>2016-08-24T21:54:21Z</updated>
+<author>
+<name>U.S. Geological Survey</name>
+<uri>http://earthquake.usgs.gov/</uri>
+</author>
+<id>http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_hour.atom</id>
+<link rel="self" href="http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_hour.atom"/>
+<icon>http://earthquake.usgs.gov/favicon.ico</icon>
+<entry>
+<id>urn:earthquake-usgs-gov:us:20006tpl</id>
+<title>M 4.6 - Kuril Islands</title>
+<updated>2016-08-24T21:51:49.040Z</updated>
+<link rel="alternate" type="text/html" href="http://earthquake.usgs.gov/earthquakes/eventpage/us20006tpl"/>
+<summary type="html">
+<![CDATA[<dl>
+<dt>Time</dt>
+<dd>2016-08-24 21:03:08 UTC</dd>
+<dd>2016-08-25 07:03:08 +10:00 at epicenter</dd>
+<dt>Location</dt>
+<dd>46.965&deg;N 152.540&deg;E</dd>
+<dt>Depth</dt>
+<dd>65.15 km (40.48 mi)</dd>
+</dl>]]>
+</summary>
+<georss:point>46.965 152.5403</georss:point>
+<georss:elev>-65150</georss:elev>
+<category label="Age" term="Past Hour"/>
+<category label="Magnitude" term="Magnitude 4"/>
+<category label="Contributor" term="us"/>
+<category label="Author" term="us"/>
+</entry>
+</feed>
