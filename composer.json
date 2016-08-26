@@ -4,17 +4,11 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
-    "repositories": [
-        {
-            "name": "willvincent/feeds",
-            "type": "vcs",
-            "url": "https://github.com/g4z/feeds"
-        }
-    ],  
     "require": {
         "php": ">=5.6.4",
         "laravel/framework": "5.3.*",
-        "willvincent/feeds": "dev-master"
+        "guzzlehttp/guzzle": "~6.0",
+        "maatwebsite/excel": "2.1.x-dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

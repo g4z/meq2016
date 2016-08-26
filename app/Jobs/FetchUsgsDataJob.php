@@ -1,52 +1,24 @@
 <?php
-/*
-   0 => "__construct"
-  1 => "set_registry"
-  2 => "__toString"
-  3 => "__destruct"
-  4 => "get_item_tags"
-  5 => "get_base"
-  6 => "sanitize"
-  7 => "get_feed"
-  8 => "get_id"
-  9 => "get_title"
-  10 => "get_description"
-  11 => "get_content"
-  12 => "get_category"
-  13 => "get_categories"
-  14 => "get_author"
-  15 => "get_contributor"
-  16 => "get_contributors"
-  17 => "get_authors"
-  18 => "get_copyright"
-  19 => "get_date"
-  20 => "get_updated_date"
-  21 => "get_local_date"
-  22 => "get_gmdate"
-  23 => "get_updated_gmdate"
-  24 => "get_permalink"
-  25 => "get_link"
-  26 => "get_links"
-  27 => "get_enclosure"
-  28 => "get_enclosures"
-  29 => "get_latitude"
-  30 => "get_longitude"
-  31 => "get_source"
 
- */
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
+use GuzzleHttp\Client as HttpClient;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Collections\CellCollection;
+use App\Models\UsgsEventRecord;
 
 class FetchUsgsDataJob implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    // private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_hour.atom';
-    private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_day.atom';
+    
+    private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.csv';
 
     /**
      * Create a new job instance.
@@ -65,31 +37,115 @@ class FetchUsgsDataJob implements ShouldQueue
      */
     public function handle()
     {
-        $feed = \Feeds::make($this->url);
 
-        foreach ($feed->get_items() as $item) {
+        $data = $this->loadCsvFileData();
+        // $data = $this->loadCsvFileDataTest();
 
-            $magnitude = $this->parseMagnitudeValue($item);
+        foreach ($data as $row) {
+
+            // ignore non 'earthquake' events
+            if ($row->type != 'earthquake') {
+                continue;
+            }
+
+            // ignore non-local events
+            if (!$this->isLocalEvent($row)) {
+                continue;
+            }
+
+            // find or create the event model
+            $model = UsgsEventRecord::where('usgs_id', $row->id)->first();
+            if ($model) {
+
+                // if record already exists and has not 
+                // been updated, ignore it and continue
+                if (    Carbon::parse($row->updated) <= 
+                        Carbon::parse($model->record_updated_at)
+                ) {
+                    continue;
+                }
+
+            } else {
+                $model = new UsgsEventRecord();
+            }
+
+            $model->event_at = Carbon::parse($row->time);
+            $model->record_updated_at = Carbon::parse($row->updated);
+            $model->usgs_id = $row->id;
+            $model->place = $row->place;
+            $model->latitude = $row->latitude;
+            $model->longitude = $row->longitude;
+            $model->depth = $row->depth;
+            $model->magnitude = $row->mag;
             
-            $data = [
-                'title' => $item->get_title(),
-                'lat' => $item->get_latitude(),
-                'lon' => $item->get_longitude(),
-                'magnitude' => $magnitude,
-                // 'date' => $item->get_date(),
-                // 'updated_date' => $item->get_updated_date(),
-                // 'local_date' => $item->get_local_date(),
-                // 'gmdate' => $item->get_gmdate(),
-            ];
-
-            dd($data);
+            $model->save();
 
         }
+
     }
 
-    //SimplePie_Item
-    private function parseMagnitudeValue($item) {
-        $buffer = $item->get_category(1)->get_term();
-        return floatval(str_replace('Magnitude ', '', $buffer));
+
+    /**
+     * Downloads a file.
+     *
+     * @throws \Exception
+     *
+     * @return Maatwebsite\Excel\Collections\RowCollection
+     */
+    private function loadCsvFileData() {
+
+        $client = new HttpClient();
+
+        $result = $client->get($this->url);
+
+        if ($result->getStatusCode() !== 200) {
+            throw new \Exception("Failed loading URL: {$this->url}");
+        }
+
+        $content = $result->getBody();
+
+        $filepath = storage_path(sprintf('csv/%s.csv', md5((new Carbon())->__toString())));
+
+        File::put($filepath, $content, true);
+        unset($content);
+
+        // read all data from the CSV file
+        // newest events are at the top
+        // so we reverse the collection
+        $data = Excel::load($filepath)->get()->reverse();
+
+        unlink($filepath);
+
+        return $data;
+
     }
+
+    /**
+     * Method for development
+     *
+     * @return Maatwebsite\Excel\Collections\RowCollection
+     */
+    private function loadCsvFileDataTest() {
+        $buffer = gzdecode(File::get(resource_path('sample-files/all_month.csv.gz')));
+        $filepath = tempnam(sys_get_temp_dir(), md5(microtime(true)));
+        File::put($filepath, $buffer);
+        $data = Excel::load($filepath)->get()->reverse();
+        unlink($filepath);
+        return $data;
+    }
+
+    /**
+     * Determines if the event is local to us
+     *
+     * @param Maatwebsite\Excel\Collections\CellCollection $event The event record
+     *
+     * @return boolean True if local event, False otherwise.
+     */
+    private function isLocalEvent(CellCollection $event) {
+        return (    $event->latitude > 42.0
+                    && $event->latitude < 44.0
+                    && $event->longitude > 11
+                    && $event->longitude < 14);
+    }
+
 }

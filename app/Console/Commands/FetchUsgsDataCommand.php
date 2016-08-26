@@ -40,6 +40,6 @@ class FetchUsgsDataCommand extends Command
     {
         $event = new FetchUsgsDataEvent();
         event($event);
-        dd($event);
+        // dd($event);
     }
 }

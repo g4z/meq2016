@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
+});
+
+Route::group(['prefix' => 'api/v1'], function () {
+    Route::get('latest', ['uses' => 'ApiController@getLatestEvents']);
 });
