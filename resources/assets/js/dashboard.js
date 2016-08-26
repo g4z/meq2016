@@ -1,24 +1,47 @@
 
 (function($) {
 
-    "use strict";
+    'use strict';
 
     let URL = '/api/v1/latest';
     let INTERVAL = 60;
+    let FORMAT = 'hh:mm:ss dddd MMMM Do YYYY';
 
     $(function() {
+
+        //determine current timezone
+        if (!sessionStorage.getItem('timezone')) {
+            var tz = moment.tz.guess() || 'UTC';
+            sessionStorage.setItem('timezone', tz);
+        }
+
+        var timezone = sessionStorage.getItem('timezone');
 
         // store uuid of most recent
         let since = null;
 
         function createEventRow(event) {
+
+            let event_time_utc = moment(event.event_at).tz('UTC');
+            let event_time_utc_label = event_time_utc.fromNow();
+            let event_time_utc_string = event_time_utc.format(FORMAT);
+            
+            let event_time_local = moment(event.event_at).tz(timezone);
+            let event_time_local_label = event_time_local.fromNow();
+            let event_time_local_string = event_time_local.format(FORMAT);
+            
+            let event_time_label_span = $('<span/>')
+                                            .attr('title', event_time_local_string)
+                                            .html(event_time_local_label);
             let $row = $('<tr/>');
-            let $date = $('<td/>').html(event.event_at);
+            let $date = $('<td/>').append(event_time_label_span);
             let $place = $('<td/>').html(event.place);
             let $magnitude = $('<td/>').html(event.magnitude);
+
             $row.append($date);
             $row.append($place);
             $row.append($magnitude);
+
             return $row;
         }
 

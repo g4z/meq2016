@@ -64,7 +64,7 @@
             <section id="footer">
                 <div class="inner">
                     <ul class="copyright">
-                        <li>&copy; <a href="https://github.com/g4z">gd4z</a> 2016 | all rights reserved | data from <a href="http://earthquake.usgs.gov/earthquakes/feed/">USGS</a></li>
+                        <li>&copy; <a href="https://github.com/g4z">g4z</a> 2016 | all rights reserved | data from <a href="http://earthquake.usgs.gov/earthquakes/feed/">USGS</a></li>
                     </ul>
                 </div>
             </section>

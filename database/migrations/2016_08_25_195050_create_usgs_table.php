@@ -21,10 +21,10 @@ class CreateUsgsTable extends Migration
             $table->string('usgs_id')->unique()->index();
             $table->string('uuid', 36)->unique()->index();
             $table->string('place');
-            $table->double('latitude', 10, 7);
-            $table->double('longitude', 10, 7);
-            $table->double('magnitude', 4, 2);
-            $table->double('depth', 6, 2);
+            $table->double('latitude', 7, 4);
+            $table->double('longitude', 7, 4);
+            $table->double('magnitude', 3, 1);
+            $table->double('depth', 5, 1);
         });
     }
 

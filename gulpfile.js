@@ -24,7 +24,6 @@ elixir(mix => {
     mix.copy([
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/skel-framework/dist/skel.min.js',
-        'node_modules/jstimezonedetect/dist/jstz.min.js',
         'node_modules/moment/min/moment-with-locales.min.js',
         'node_modules/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js',
     ], 'resources/assets/js/vendor');
@@ -47,7 +46,6 @@ elixir(mix => {
         'resources/assets/js/vendor/jquery.scrollex.min.js',
         'resources/assets/js/vendor/moment-with-locales.min.js',
         'resources/assets/js/vendor/moment-timezone-with-data-2010-2020.min.js',
-        'resources/assets/js/vendor/jstz.min.js',
     ], 'public/assets/js/vendor.js')
 
     // pack custom javascripts

@@ -16,10 +16,9 @@ use App\Models\UsgsEventRecord;
 class FetchUsgsDataJob implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
-
     
-    private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.csv';
-    // private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv';
+    // private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.csv';
+    private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv';
 
     /**
      * Create a new job instance.
@@ -85,7 +84,6 @@ class FetchUsgsDataJob implements ShouldQueue
 
     }
 
-
     /**
      * Downloads a file.
      *
@@ -95,32 +93,31 @@ class FetchUsgsDataJob implements ShouldQueue
      */
     private function loadCsvFileData() {
 
-        $client = new HttpClient();
-
+        // computer local tmpfile path
         $filepath = storage_path(sprintf('csv/%s.csv', md5((new Carbon())->__toString())));
 
-        $result = $client->request('GET', $this->url, ['save_to' => $filepath]);
+        // Guzzle has a bug here?????
+        // @see: http://stackoverflow.com/questions/39162814/is-guzzle-prepending-lines-to-my-downloaded-text-csv-file
+        // $client = new HttpClient();
+        // $result = $client->request('GET', $this->url/*, ['save_to' => $filepath]*/);
+        // if ($result->getStatusCode() !== 200) {
+            // throw new \Exception("Failed loading URL: {$this->url}");
+        // }
 
-        if ($result->getStatusCode() !== 200) {
+        $content = file_get_contents($this->url);
+        if (!$content) {
             throw new \Exception("Failed loading URL: {$this->url}");
         }
 
-        // $content = $result->getBody()->getContents();
-// dd($content);
-// dd(get_class_methods($content));
-
-        
-// echo $content;
-// exit;
-        // File::put($filepath, $content, true);
-        // unset($content);
+        File::put($filepath, $content, true);
+        unset($content);
 
         // read all data from the CSV file
         // newest events are at the top
         // so we reverse the collection
         $data = Excel::load($filepath)->get()->reverse();
 
-        // unlink($filepath);
+        unlink($filepath);
 
         return $data;
 
