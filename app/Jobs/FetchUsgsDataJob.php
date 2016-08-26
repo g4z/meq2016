@@ -19,6 +19,7 @@ class FetchUsgsDataJob implements ShouldQueue
 
     
     private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.csv';
+    // private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv';
 
     /**
      * Create a new job instance.
@@ -96,25 +97,30 @@ class FetchUsgsDataJob implements ShouldQueue
 
         $client = new HttpClient();
 
-        $result = $client->get($this->url);
+        $filepath = storage_path(sprintf('csv/%s.csv', md5((new Carbon())->__toString())));
+
+        $result = $client->request('GET', $this->url, ['save_to' => $filepath]);
 
         if ($result->getStatusCode() !== 200) {
             throw new \Exception("Failed loading URL: {$this->url}");
         }
 
-        $content = $result->getBody();
+        // $content = $result->getBody()->getContents();
+// dd($content);
+// dd(get_class_methods($content));
 
-        $filepath = storage_path(sprintf('csv/%s.csv', md5((new Carbon())->__toString())));
-
-        File::put($filepath, $content, true);
-        unset($content);
+        
+// echo $content;
+// exit;
+        // File::put($filepath, $content, true);
+        // unset($content);
 
         // read all data from the CSV file
         // newest events are at the top
         // so we reverse the collection
         $data = Excel::load($filepath)->get()->reverse();
 
-        unlink($filepath);
+        // unlink($filepath);
 
         return $data;
 
