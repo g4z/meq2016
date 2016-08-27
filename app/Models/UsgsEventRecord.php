@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Observers\UsgsEventRecordObserver;
-use Carbon\Carbon;
+use Jenssegers\Date\Date;
 
 class UsgsEventRecord extends Model
 {
@@ -31,7 +31,7 @@ class UsgsEventRecord extends Model
      * @return <type> The event at attribute.
      */
     public function getEventAtAttribute($value) {
-        return Carbon::parse($value)->toIso8601String();
+        return Date::parse($value)->toIso8601String();
     }
 
     /**
@@ -42,7 +42,7 @@ class UsgsEventRecord extends Model
      * @return <type> The record updated at attribute.
      */
     public function getRecordUpdatedAtAttribute($value) {
-        return Carbon::parse($value)->toIso8601String();
+        return Date::parse($value)->toIso8601String();
     }
 
     /**

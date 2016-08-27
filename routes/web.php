@@ -10,11 +10,14 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-
 Route::get('/', function () {
-    return view('dashboard');
+    return view('dashboard', [
+        'language' => App::getLocale(),
+        'rate' => config('meq2016.update.rate'),
+    ]);
 });
 
 Route::group(['prefix' => 'api/v1'], function () {
     Route::get('latest', ['uses' => 'ApiController@getLatestEvents']);
 });
+

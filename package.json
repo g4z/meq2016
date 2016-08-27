@@ -17,6 +17,7 @@
     "vue-resource": "^0.9.3"
   },
   "dependencies": {
+    "js-cookie": "^2.1.2",
     "moment": "^2.14.1",
     "moment-timezone": "^0.5.5",
     "skel-framework": "github:ajlkn/skel"

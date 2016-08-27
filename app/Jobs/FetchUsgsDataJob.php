@@ -7,7 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\File;
-use Carbon\Carbon;
+use Jenssegers\Date\Date;
 use GuzzleHttp\Client as HttpClient;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Collections\CellCollection;
@@ -59,8 +59,8 @@ class FetchUsgsDataJob implements ShouldQueue
 
                 // if record already exists and has not 
                 // been updated, ignore it and continue
-                if (    Carbon::parse($row->updated) <= 
-                        Carbon::parse($model->record_updated_at)
+                if (    Date::parse($row->updated) <= 
+                        Date::parse($model->record_updated_at)
                 ) {
                     continue;
                 }
@@ -69,8 +69,8 @@ class FetchUsgsDataJob implements ShouldQueue
                 $model = new UsgsEventRecord();
             }
 
-            $model->event_at = Carbon::parse($row->time);
-            $model->record_updated_at = Carbon::parse($row->updated);
+            $model->event_at = Date::parse($row->time);
+            $model->record_updated_at = Date::parse($row->updated);
             $model->usgs_id = $row->id;
             $model->place = $row->place;
             $model->latitude = $row->latitude;

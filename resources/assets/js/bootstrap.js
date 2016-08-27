@@ -11,3 +11,4 @@ window.moment = require('moment');
 
 window.momentz = require('moment-timezone');
 
+window.cookies = require('js-cookie');

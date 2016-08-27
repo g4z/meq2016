@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\UsgsEventRecord;
 use App\Http\Requests\GetLatestEventsRequest;
-use Carbon\Carbon;
+use Jenssegers\Date\Date;
 
 class ApiController extends Controller
 {
@@ -26,7 +26,7 @@ class ApiController extends Controller
 
         } else {
 
-            $from = Carbon::now()->subWeek();
+            $from = Date::now()->subWeek();
 
             return UsgsEventRecord::where('event_at', '>', $from)
                                     ->orderBy('event_at')

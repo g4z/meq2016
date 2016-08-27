@@ -1,0 +1,16 @@
+
+/* Fieldset */
+
+    fieldset {
+        border-radius: _size(border-radius);
+        border: solid 1px _palette(border);
+        margin-bottom: _size(element-margin);
+        padding: 0.5em;
+    }
+
+    fieldset > legend {
+        border-radius: _size(border-radius);
+        border: solid 1px _palette(border);
+        padding: 0.25em 1em 0.25em 1em;
+        background: _palette(accent);
+    }

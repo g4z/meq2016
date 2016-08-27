@@ -1,16 +1,12 @@
 <!DOCTYPE HTML>
-<!--
-    Solid State by HTML5 UP
-    html5up.net | @ajlkn
-    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-    @see: https://html5up.net/solid-state
--->
 <html>
     <head>
     
-        <title>Central Italy Earthquakes</title>
+        <title>@lang('dashboard.page.title')</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="language" content="{{ $language }}" />
+        <meta name="rate" content="{{ $rate }}" />
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
         <link rel="stylesheet" href="assets/css/app.css" />
         <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
@@ -22,20 +18,46 @@
         <div id="page-wrapper">
 
             <header id="header">
-                <h1><a href="/">Central Italy Earthquakes</a></h1>
+                <h1><a href="/">@lang('dashboard.page.title')</a></h1>
                 <nav>
-                    <a href="#menu">Menu</a>
+                    <a href="#menu">@lang('dashboard.label.menu')</a>
                 </nav>
             </header>
 
             <nav id="menu">
                 <div class="inner">
-                    <h2>Menu</h2>
-                    <ul class="links">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="#">About</a></li>
-                    </ul>
-                    <a href="#" class="close">Close</a>
+                    <h2>@lang('dashboard.label.menu')</h2>
+                    <fieldset>
+                        <legend>@lang('dashboard.label.rate')</legend>
+                        <span class="6u">
+                            <input type="radio" id="rate-1m" class="rate-selector" name="rate" value="1">
+                            <label for="rate-1m">1 min</label>
+                        </span>
+                        <span class="6u$">
+                            <input type="radio" id="rate-5m" class="rate-selector" name="rate" value="5">
+                            <label for="rate-5m">5 min</label>
+                        </span>
+                        <span class="6u">
+                            <input type="radio" id="rate-15m" class="rate-selector" name="rate" value="15">
+                            <label for="rate-15m">15 min</label>
+                        </span>
+                        <span class="6u$">
+                            <input type="radio" id="rate-30m" class="rate-selector" name="rate" value="30">
+                            <label for="rate-30m">30 min</label>
+                        </span>
+                    </fieldset>
+                    <fieldset>
+                        <legend>@lang('dashboard.label.language')</legend>
+                        <span class="6u">
+                            <input type="radio" id="language-it" class="language-selector" name="language" value="it">
+                            <label for="language-it">Italiano</label>
+                        </span>
+                        <span class="6u$">
+                            <input type="radio" id="language-en" class="language-selector" name="language" value="en">
+                            <label for="language-en">English</label>
+                        </span>
+                    </fieldset>
+                    <a href="#" class="close">@lang('dashboard.label.close')</a>
                 </div>
             </nav>
 
@@ -47,9 +69,9 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Date</th>
-                                            <th>Place</th>
-                                            <th>Mag.</th>
+                                            <th>@lang('dashboard.label.date')</th>
+                                            <th>@lang('dashboard.label.place')</th>
+                                            <th>@lang('dashboard.label.magnitude')</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -64,7 +86,7 @@
             <section id="footer">
                 <div class="inner">
                     <ul class="copyright">
-                        <li>&copy; <a href="https://github.com/g4z">g4z</a> 2016 | all rights reserved | data from <a href="http://earthquake.usgs.gov/earthquakes/feed/">USGS</a></li>
+                        <li>&copy; <a href="https://github.com/g4z">g4z</a> 2016 | @lang('dashboard.label.copyright') | @lang('dashboard.label.source') <a href="http://earthquake.usgs.gov/earthquakes/feed/">USGS</a></li>
                     </ul>
                 </div>
             </section>

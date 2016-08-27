@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ce489a55d9c47f8b138852702c1dc7ea",
-    "content-hash": "4bf8f4a38069740692f87db432840dad",
+    "hash": "5842fea777c72c152a64848a6e3aa531",
+    "content-hash": "dee0cd52d06d68943a1273ce72917430",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -420,6 +420,63 @@
             "time": "2015-04-20 18:58:01"
         },
         {
+            "name": "jenssegers/date",
+            "version": "v3.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jenssegers/date.git",
+                "reference": "e57b9c943498967674d9baf73846060be899b604"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jenssegers/date/zipball/e57b9c943498967674d9baf73846060be899b604",
+                "reference": "e57b9c943498967674d9baf73846060be899b604",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "^1.0",
+                "php": ">=5.4",
+                "symfony/translation": "^2.7|^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0|^5.0",
+                "satooshi/php-coveralls": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jenssegers\\Date\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jens Segers",
+                    "homepage": "https://jenssegers.com"
+                }
+            ],
+            "description": "A date library to help you work with dates in different languages",
+            "homepage": "https://github.com/jenssegers/date",
+            "keywords": [
+                "carbon",
+                "date",
+                "datetime",
+                "i18n",
+                "laravel",
+                "time",
+                "translation"
+            ],
+            "time": "2016-08-16 07:32:29"
+        },
+        {
             "name": "jeremeamia/SuperClosure",
             "version": "2.2.0",
             "source": {
@@ -479,16 +536,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.3.3",
+            "version": "v5.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "4dbb8bc3897068c392d405bad078f22611f0d95c"
+                "reference": "7159ffbadc79558a42ece2cdd1ec2e7e13105b5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/4dbb8bc3897068c392d405bad078f22611f0d95c",
-                "reference": "4dbb8bc3897068c392d405bad078f22611f0d95c",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/7159ffbadc79558a42ece2cdd1ec2e7e13105b5d",
+                "reference": "7159ffbadc79558a42ece2cdd1ec2e7e13105b5d",
                 "shasum": ""
             },
             "require": {
@@ -602,7 +659,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-08-26 11:47:28"
+            "time": "2016-08-26 21:40:26"
         },
         {
             "name": "league/flysystem",
@@ -2300,6 +2357,68 @@
                 "environment"
             ],
             "time": "2016-06-14 14:14:52"
+        },
+        {
+            "name": "vluzrmos/language-detector",
+            "version": "dev-non-httponly-cookie-fix",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/g4z/laravel-language-detector.git",
+                "reference": "ae9255ede4f5d2caad534d8f50f39aefbddf896a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/g4z/laravel-language-detector/zipball/ae9255ede4f5d2caad534d8f50f39aefbddf896a",
+                "reference": "ae9255ede4f5d2caad534d8f50f39aefbddf896a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "~5.0",
+                "illuminate/cookie": "~5.0",
+                "illuminate/support": "~5.0",
+                "illuminate/translation": "~5.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "~1.11",
+                "mockery/mockery": "0.9.*",
+                "orchestra/testbench": "3.0.*",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "Vluzrmos\\LanguageDetector\\": "src/"
+                },
+                "files": [
+                    "src/Support/helpers.php"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Vluzrmos\\LanguageDetector\\Testing\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vagner do Carmo",
+                    "email": "vluzrmos@gmail.com"
+                }
+            ],
+            "description": "Detect the language for your application using browser preferences, subdomains or route prefixes.",
+            "keywords": [
+                "Language",
+                "Laravel",
+                "Locale",
+                "Lumen",
+                "i18n"
+            ],
+            "support": {
+                "source": "https://github.com/g4z/laravel-language-detector/tree/non-httponly-cookie-fix"
+            },
+            "time": "2016-08-27 01:08:51"
         }
     ],
     "packages-dev": [
@@ -3818,7 +3937,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "maatwebsite/excel": 20
+        "maatwebsite/excel": 20,
+        "vluzrmos/language-detector": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

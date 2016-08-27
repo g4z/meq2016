@@ -4,11 +4,19 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/g4z/laravel-language-detector"
+        }
+    ],
     "require": {
         "php": ">=5.6.4",
         "laravel/framework": "5.3.*",
         "guzzlehttp/guzzle": "~6.0",
-        "maatwebsite/excel": "2.1.x-dev"
+        "maatwebsite/excel": "2.1.x-dev",
+        "vluzrmos/language-detector": "dev-non-httponly-cookie-fix",
+        "jenssegers/date": "~3.2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
