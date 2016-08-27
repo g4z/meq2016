@@ -94,7 +94,7 @@ class FetchUsgsDataJob implements ShouldQueue
     private function loadCsvFileData() {
 
         // computer local tmpfile path
-        $filepath = storage_path(sprintf('csv/%s.csv', md5((new Carbon())->__toString())));
+        $filepath = storage_path(sprintf('csv/%s.csv', md5((new Date())->__toString())));
 
         // Guzzle has a bug here?????
         // @see: http://stackoverflow.com/questions/39162814/is-guzzle-prepending-lines-to-my-downloaded-text-csv-file
