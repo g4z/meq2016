@@ -45,6 +45,9 @@
         let event_time_local_label = event_time_local.locale(language).fromNow();
         let event_time_local_string = event_time_local.locale(language).format(format);
         
+        // FIXME force one line :/
+        event_time_local_label = event_time_local_label.replace(/\s/g, '&nbsp;');
+
         let event_time_label_span = $('<span/>')
                                         .attr('title', event_time_local_string)
                                         .html(event_time_local_label);
