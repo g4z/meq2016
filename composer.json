@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "g4z/meq2016",
+    "description": "Website to display earthquakes in Central Italy",
+    "keywords": ["italy", "earthquake"],
     "license": "MIT",
     "type": "project",
     "repositories": [
@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=5.6.4",
+        "php": ">=7.0",
         "laravel/framework": "5.3.*",
         "guzzlehttp/guzzle": "~6.0",
         "maatwebsite/excel": "2.1.x-dev",
