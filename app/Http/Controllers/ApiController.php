@@ -10,8 +10,8 @@ use Jenssegers\Date\Date;
 
 class ApiController extends Controller
 {
-    public function getLatestEvents(GetLatestEventsRequest $request) {
-
+    public function getLatestEvents(GetLatestEventsRequest $request)
+    {
         $since = $request->input('since');
 
         if ($since) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace app\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -16,29 +16,23 @@ use App\Models\UsgsEventRecord;
 class FetchUsgsDataJob implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
-    
+
     // private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.csv';
     private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv';
     // private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv';
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
     public function __construct()
     {
-
     }
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {
-
         $data = $this->loadCsvFileData();
         // $data = $this->loadCsvFileDataTest();
 
@@ -58,14 +52,13 @@ class FetchUsgsDataJob implements ShouldQueue
             $model = UsgsEventRecord::where('usgs_id', $row->id)->first();
             if ($model) {
 
-                // if record already exists and has not 
+                // if record already exists and has not
                 // been updated, ignore it and continue
-                if (    Date::parse($row->updated) <= 
+                if (Date::parse($row->updated) <=
                         Date::parse($model->record_updated_at)
                 ) {
                     continue;
                 }
-
             } else {
                 $model = new UsgsEventRecord();
             }
@@ -78,11 +71,9 @@ class FetchUsgsDataJob implements ShouldQueue
             $model->longitude = $row->longitude;
             $model->depth = $row->depth;
             $model->magnitude = $row->mag;
-            
+
             $model->save();
-
         }
-
     }
 
     /**
@@ -92,7 +83,8 @@ class FetchUsgsDataJob implements ShouldQueue
      *
      * @return Maatwebsite\Excel\Collections\RowCollection
      */
-    private function loadCsvFileData() {
+    private function loadCsvFileData()
+    {
 
         // computer local tmpfile path
         $filepath = storage_path(sprintf('csv/%s.csv', md5((new Date())->__toString())));
@@ -121,35 +113,36 @@ class FetchUsgsDataJob implements ShouldQueue
         unlink($filepath);
 
         return $data;
-
     }
 
     /**
-     * Method for development
+     * Method for development.
      *
      * @return Maatwebsite\Excel\Collections\RowCollection
      */
-    private function loadCsvFileDataTest() {
+    private function loadCsvFileDataTest()
+    {
         $buffer = gzdecode(File::get(resource_path('sample-files/all_month.csv.gz')));
         $filepath = tempnam(sys_get_temp_dir(), md5(microtime(true)));
         File::put($filepath, $buffer);
         $data = Excel::load($filepath)->get()->reverse();
         unlink($filepath);
+
         return $data;
     }
 
     /**
-     * Determines if the event is local to us
+     * Determines if the event is local to us.
      *
      * @param Maatwebsite\Excel\Collections\CellCollection $event The event record
      *
-     * @return boolean True if local event, False otherwise.
+     * @return bool True if local event, False otherwise
      */
-    private function isLocalEvent(CellCollection $event) {
-        return (    $event->latitude > 42.0
+    private function isLocalEvent(CellCollection $event)
+    {
+        return     $event->latitude > 42.0
                     && $event->latitude < 44.0
                     && $event->longitude > 11
-                    && $event->longitude < 14);
+                    && $event->longitude < 14;
     }
-
 }
