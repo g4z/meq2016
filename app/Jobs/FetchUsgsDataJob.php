@@ -19,6 +19,7 @@ class FetchUsgsDataJob implements ShouldQueue
     
     // private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.csv';
     private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv';
+    // private $url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv';
 
     /**
      * Create a new job instance.
