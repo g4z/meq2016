@@ -31,7 +31,7 @@
         }
         intervalHandle = setInterval(function() {
             update();
-        }, (seconds * 1000));
+        }, ((seconds * 60) * 1000));
     }
 
     // function to create each event row

@@ -4590,7 +4590,6 @@ body.is-menu-visible #menu {
         -moz-align-items: -moz-flex-start;
         -ms-align-items: -ms-flex-start;
         -webkit-box-align: start;
-        -ms-grid-row-align: flex-start;
         align-items: flex-start; }
       .wrapper.spotlight .image {
         width: 19em;
